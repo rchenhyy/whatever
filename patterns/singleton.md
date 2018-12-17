@@ -48,9 +48,8 @@
 
 3. 面向切面 - 类装饰器
 
-
-    # using class decorator        
-    @singleton
+        
+    @singleton  # using class decorator
     class Foo(object):
         pass
     
@@ -68,9 +67,11 @@
 4. 面向对象 - 类方法2（与类实例化有关的几个方法：__new__, __init__, __call__）
 
 
-    # the process of instantiation in python: meta_cls.__call__ -> cls.__new__ -> cls.__init__
-    # using __new__ method of a class (meta_cls: type, cls: Singleton)
     class Singleton(object):
+        '''
+        the process of instantiation in python: meta_cls.__call__ -> cls.__new__ -> cls.__init__
+        using __new__ method of a class (meta_cls: type, cls: Singleton)
+        '''
         
         def __new__(cls, *args, **kwargs):
             if not hasattr(Singleton, '_instance'):
@@ -81,9 +82,11 @@
 5. 面向对象 - 元类
 
 
-    # the process of instantiation in python: meta_cls.__call__ -> cls.__new__ -> cls.__init__
-    # using __call__ method of a meta class (meta_cls: SingletonType, cls: Singleton)
     class SingletonType(type):
+        '''
+        the process of instantiation in python: meta_cls.__call__ -> cls.__new__ -> cls.__init__
+        using __call__ method of a meta class (meta_cls: SingletonType, cls: Singleton)
+        '''        
         
         # cls is any instance of SingletonType; cls(...) = SingletonType.__call__(cls, ...)
         def __call__(cls, *args, **kwargs):
