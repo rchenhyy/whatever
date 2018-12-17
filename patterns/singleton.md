@@ -25,17 +25,17 @@
 
 1. 面向过程 - 模块变量
 
-
+    ```
     class Singleton(object):
         pass
 
 
     INSTANCE = Singleton()  # defined as a module level variable; supposed to be the only instance, but no guarantee
-
+    ```
 
 2. 面向过程 - 类方法1
 
-
+    ```
     class Singleton(object):
         pass
         
@@ -44,11 +44,11 @@
             if not hasattr(Singleton, '_instance'):
                 Singleton._instance = Singleton(*args, **kwargs)
             return Singleton._instance
-
+    ```
 
 3. 面向切面 - 类装饰器
 
-        
+    ```
     @singleton  # using class decorator
     class Foo(object):
         pass
@@ -62,11 +62,11 @@
                 _instances[cls] = cls(*args, **kwargs)
             return _instances[cls]
         return _singleton   # warnings: the returned valued is a function; attrs in cls will be lost
-
+    ```
 
 4. 面向对象 - 类方法2（与类实例化有关的几个方法：__new__, __init__, __call__）
 
-
+    ```
     class Singleton(object):
         '''
         the process of instantiation in python: meta_cls.__call__ -> cls.__new__ -> cls.__init__
@@ -77,11 +77,11 @@
             if not hasattr(Singleton, '_instance'):
                 Singleton._instance = Singleton(*args, **kwargs)
             return Singleton._instance
-
+    ```
 
 5. 面向对象 - 元类
 
-
+    ```
     class SingletonType(type):
         '''
         the process of instantiation in python: meta_cls.__call__ -> cls.__new__ -> cls.__init__
@@ -98,11 +98,11 @@
             
     class Foo(metaclass=SingletonType):
         pass
-
+    ```
         
 * 线程安全版的单例模式（使用双重检查锁：线程安全 && 仅第一次初始化时加锁）
 
-
+    ```
     import threading
     
     class SingletonType(type):
@@ -116,3 +116,4 @@
                     if not hasattr(cls, '_instance'):
                         cls._instance = super(SingletonType, cls).__call__(*args, **kwargs)
             return cls._instance
+    ```
